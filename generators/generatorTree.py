@@ -1,9 +1,11 @@
 from .parsimoniaTree import ParsimoniaTree
+from .distanceTree import DistanceTree
 
 class GeneratorTreeFactory:
 
     __generators = {
-        'ParsimoniaTree': ParsimoniaTree()
+        'ParsimoniaTree': ParsimoniaTree(),
+        'DistanceTree': DistanceTree
     }
 
     @staticmethod
