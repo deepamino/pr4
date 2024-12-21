@@ -234,7 +234,7 @@ print(f"Archivo {nombre_archivo} generado con {num_secuencias} secuencias de {lo
 
 Algunos de los resultados obtenidoss han sido los siguientes:
 
-En cuanto al método de máxima parsimonia, el resultado se muestra en la FIgura 3.
+En cuanto al método de **máxima parsimonia**, el resultado se muestra en la Figura 3.
 
 ```python
 generator = GeneratorTreeFactory().initialize_generator('ParsimoniaTree')
@@ -246,6 +246,41 @@ generator.show_tree(tree_parsimonia)
     <img src="resources/ej3_par_tree.png" width="70%">
     <p><b>Figura 3.</b> Árbol filogenético por el método de máxima parsimonia.</p>
 </div>
+
+En cuando a los métodos de **distancia**, con UPGMA, se obtuvieron los resultados siguientes.
+
+<div align="center">
+    <img src="resources/ej3_upgma_tree.png" width="70%">
+    <p><b>Figura 4.</b> Árbol filogenético por distancia (método identidad)</p>
+</div>
+
+<div align="center">
+    <img src="resources/ej3_upgma_blastn_tree.png" width="70%">
+    <p><b>Figura 5.</b> Árbol filogenético por distancia (método blastn)</p>
+</div>
+
+<div align="center">
+    <img src="resources/ej3_upgma_trans_tree.png" width="70%">
+    <p><b>Figura 6.</b> Árbol filogenético por distancia (método trans)</p>
+</div>
+
+En cuanto a los métodos de **neighboor joining**, tenemos:
+
+<div align="center">
+    <img src="resources/ej3_nj_tree.png" width="70%">
+    <p><b>Figura 7.</b> Árbol filogenético por neighboor joining (método identidad)</p>
+</div>
+
+<div align="center">
+    <img src="resources/ej3_nj_blastn_tree.png" width="70%">
+    <p><b>Figura 8.</b> Árbol filogenético por neighboor joining (método blastn)</p>
+</div>
+
+<div align="center">
+    <img src="resources/ej3_nj_trans_tree.png" width="70%">
+    <p><b>Figura 9.</b> Árbol filogenético por distancia (método trans)</p>
+</div>
+
 
 ---
 
