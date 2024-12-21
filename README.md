@@ -204,7 +204,48 @@ Se generaron árboles filogenéticos a partir de secuencias de nucleótidos crea
 
 ### Código principal:
 - Generación de secuencias y archivo FASTA.
+
+```python
+def generar_secuencia(longitud):
+    nucleotidos = ['A', 'T', 'C', 'G']
+    return ''.join(random.choice(nucleotidos) for _ in range(longitud))
+```
+
+```python
+def crear_fasta(nombre_archivo, num_secuencias, longitud):
+    with open(nombre_archivo, 'w') as archivo:
+        for i in range(1, num_secuencias + 1):
+            secuencia = generar_secuencia(longitud)
+            archivo.write(f">Secuencia_{i}\n")  # Encabezado FASTA
+            archivo.write(f"{secuencia}\n")
+```
+
+```python
+nombre_archivo = "./fasta_files/secuencias.fasta"
+num_secuencias = 5
+longitud_secuencia = 5
+
+crear_fasta(nombre_archivo, num_secuencias, longitud_secuencia)
+
+print(f"Archivo {nombre_archivo} generado con {num_secuencias} secuencias de {longitud_secuencia} nucleótidos.")
+```
+
 - Construcción y visualización de árboles mediante parsimonia y métodos de distancia.
+
+Algunos de los resultados obtenidoss han sido los siguientes:
+
+En cuanto al método de máxima parsimonia, el resultado se muestra en la FIgura 3.
+
+```python
+generator = GeneratorTreeFactory().initialize_generator('ParsimoniaTree')
+tree_parsimonia = generator.generate_tree(sequences)
+generator.show_tree(tree_parsimonia)
+```
+
+<div align="center">
+    <img src="resources/ej3_par_tree.png" width="70%">
+    <p><b>Figura 3.</b> Árbol filogenético por el método de máxima parsimonia.</p>
+</div>
 
 ---
 
