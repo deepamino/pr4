@@ -111,6 +111,11 @@ def plot_tree(tree, color_dict=None, branch_width=2):
 
 Esta función mostrará el árbol filogenético mediante el uso de la librería `matplotlib`, cosa que es autogestionada por biopython directamente, destacando en color rojo la especie más alejada genéticamente del resto. El resultado de esta función para el árbol de estudio se puede ver en la Figura 1.
 
+<div align="center">
+    <img src="resources/ej1_tree.png" width="70%">
+    <p><b>Figura 1.</b> Árbol filogenético generado con la subunidad beta de la hemoglobina en distintos organismos.</p>
+</div>
+
 ---
 
 ## **Ejercicio 2: Modificación de un Árbol Filogenético**
@@ -137,7 +142,40 @@ El árbol modificado resalta visualmente las especies más cercanas y la más di
 
 ### Código principal:
 - Funciones para cambiar nombres, ajustar longitudes y asignar colores.
+
+```python
+def modify_tree(tree):
+    for clade in tree.find_clades():
+        if clade.name == 'KX241132.1':
+            clade.name = 'Eriocnemis luciani (KX241132.1)'
+
+        elif clade.name == 'KX241142.1':
+            clade.name = 'Haplophaedia aureliae (KX241142.1))'
+
+        elif clade.name == 'MZ593243.1':
+            clade.name = 'Arenicola marina (MZ593243.1)'
+
+    for clade in tree.find_clades():
+        if clade.name in ['Eriocnemis luciani (KX241132.1)', 'Haplophaedia aureliae (KX241142.1))']:
+            clade.branch_length = 0.5
+            clade.color = 'blue'
+
+        elif clade.name == 'Arenicola marina (MZ593243.1)':
+            clade.branch_length = 0.9
+            clade.color = 'red'
+
+    return tree
+```
+
+- Función para visualizar el árbol, similar a la del ejercicio anterior aunque con algunas modificaciones.
 - Guardado del árbol modificado en formato Newick para futuras referencias.
+
+ El resultado de este ejercicio se puede ver en la Figura 2, donde se han destacado las especies mencionadas tal y como se ha descrito.
+
+<div align="center">
+    <img src="resources/ej2_tree.png" width="70%">
+    <p><b>Figura 2.</b> Árbol filogenético modificado, destacando tanto la rama más lejana como las más cercancas entre sí.</p>
+</div>
 
 ---
 
