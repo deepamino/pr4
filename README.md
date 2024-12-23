@@ -230,65 +230,116 @@ crear_fasta(nombre_archivo, num_secuencias, longitud_secuencia)
 print(f"Archivo {nombre_archivo} generado con {num_secuencias} secuencias de {longitud_secuencia} nucleótidos.")
 ```
 
-- Construcción y visualización de árboles mediante parsimonia y métodos de distancia.
+### Genración y comparación de los árboles/resultados
 
-Algunos de los resultados obtenidoss han sido los siguientes:
-
-En cuanto al método de **máxima parsimonia**, el resultado se muestra en la Figura 3.
-
-```python
-generator = GeneratorTreeFactory().initialize_generator('ParsimoniaTree')
-tree_parsimonia = generator.generate_tree(sequences)
-generator.show_tree(tree_parsimonia)
-```
+Los árboles obtenidos a partir de las secuencias aleatorias son los presentados en la Figura 3.
 
 <div align="center">
-    <img src="resources/ej3_par_tree.png" width="70%">
-    <p><b>Figura 3.</b> Árbol filogenético por el método de máxima parsimonia.</p>
+    <img src="resources/ej3_trees.png">
+    <p><b>Figura 3.</b> Árboles filogenéticos obtenidos mediante cada método.</p>
 </div>
 
-En cuando a los métodos de **distancia**, con UPGMA, se obtuvieron los resultados siguientes.
+### Comparación de medidas numéricas
+
+Posteriormente, se han obtenido medidas numéricas a partir de los diversos árboles que se presentan en la siguiente tabla:
+
+| **Métrica**                          | **Parsimonia** | **UPGMA - Identity** | **UPGMA - Blastn** | **UPGMA - Trans** | **NJ - Identity** | **NJ - Blastn** | **NJ - Trans** |
+|--------------------------------------|----------------|-----------------------|---------------------|-------------------|-------------------|-----------------|-----------------|
+| **Longitud Total del Árbol**         | 1.6            | 1.6                  | 2.88               | 1.4               | 1.6               | 2.88            | 1.28            |
+| **Profundidad Máxima**               | 0.4875         | 0.4125               | 0.7425             | 0.3825            | 0.5               | 1.02            | 0.6             |
+| **Longitud Promedio de Ramas**       | 0.2            | 0.2                  | 0.36               | 0.175             | 0.266667          | 0.411429        | 0.182857        |
+| **Número de Nodos Internos**         | 4              | 4                    | 4                  | 4                 | 3                 | 3               | 3               |
+| **Número de Nodos Terminales**       | 5              | 5                    | 5                  | 5                 | 5                 | 5               | 5               |
+| **Balance del Árbol**                | Counter({2: 2, 5: 1, 4: 1}) | Counter({5: 1, 4: 1, 3: 1, 2: 1}) | Counter({5: 1, 4: 1, 3: 1, 2: 1}) | Counter({5: 1, 4: 1, 3: 1, 2: 1}) | Counter({5: 1, 3: 1, 2: 1}) | Counter({2: 2, 5: 1}) | Counter({5: 1, 3: 1, 2: 1}) |
+| **Distancia Promedio entre Terminales** | 0.665        | 0.665                | 1.197              | 0.565             | 0.66              | 1.188           | 0.548           |
+| **Número de Bifurcaciones**          | 4              | 4                    | 4                  | 4                 | 3                 | 3               | 3               |
+| **Es Ultramétrico**                  | False          | True                 | True               | True              | False             | False           | False           |
+
+Donde:
+
+- La longitud total del árbol es la suma de todas las longitudes de las ramas. Esto puede interpretarse como una medida de la divergencia acumulada entre las secuencias.
+- La profundidad máxima del árbol mide la distancia evolutiva máxima desde la raíz hasta cualquier nodo terminal. Es útil para comparar niveles de divergencia.
+- La longitud promedio de las ramas te da una idea del grado promedio de divergencia entre los nodos.
+- El número de nodos internos y hojas (terminales) puede describir la complejidad y resolución del árbol.
+- El balance del árbol mide la simetría entre las ramas. Árboles muy desbalanceados pueden indicar una alta disparidad en las tasas evolutivas entre los linajes.
+- La distancia promedio entre nodos terminales mide la divergencia promedio entre todas las secuencias.
+- El número de bifurcaciones en el árbol puede proporcionar información sobre la resolución del árbol y los posibles puntos de especiación.
+- Se verifica si el árbol UPGMA es ultramétrico, es decir, si todas las hojas tienen la misma distancia desde la raíz.
+
+
+### Visualización de las métricas
+
+Con la finalidad de observar de forma más clara las métricas presentadas, se han realizado las siguientes visualizaciones donde las conclusiones más detalladas se encuentran en el *notebook*:
+
+#### 1. Longitud del árbol y longitud promedio de ramas
+
+<p align="center">
+      <img src="resources/graf_1.png" alt="Imagen 1" width="70%">
+    <p align="center"><b>Figura 4.</b> Longitud del árbol y longitud promedio de ramas</p>
+</p>
+
+La Figura 4 presenta las gráficas que comparan las longitudes del árbol y sus promedio de longitud de las ramas en función del método utilizado. En general, las diferencias en la longitud total y promedio reflejan cómo cada método interpreta y representa las relaciones evolutivas entre las secuencias. Los métodos como Parsimonia son más conservadores, mientras que Blastn tiende a maximizar las distancias.
+
+#### 2. Profundidad máxima del árbol y número de nodos internos y terminales
 
 <div align="center">
-    <img src="resources/ej3_upgma_tree.png" width="70%">
-    <p><b>Figura 4.</b> Árbol filogenético por distancia (método identidad)</p>
+  <img src="resources/graf_2.png" alt="Graf 1" width="45%">
+  <img src="resources/graf_3.png" alt="Graf 2" width="45%">
 </div>
+<div align="center">
+  <b>Figura 5.</b> Profundidad máxima &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Figura 6.</b> Número de nodos internos y terminales
+</div>
+
+<br>
+
+Las Figuras 5 y 6 proporcionan información sobre la profundidad máxima y el número de nodos internos y terminales de los árboles resultantes de cada método. Por un lado, la profundidad máxima es un indicador clave de la divergencia evolutiva reflejada en los árboles, y los métodos Blastn parecen ser los más sensibles para capturar esta variabilidad, mientras que los métodos como Parsimonia y UPGMA - Identity se enfocan en representaciones más compactas y directas. Esto destaca la influencia del modelo y la distancia utilizada en la construcción de los árboles. Por otro lado, la Figura 6 destaca diferencias importantes en la estructura de los árboles según el método utilizado, mostrando cómo cada algoritmo prioriza la complejidad topológica y la relación evolutiva entre las secuencias.
+
+#### 3. Balance del árbol
+
+<p align="center">
+      <img src="resources/graf_4.png" alt="Imagen 4" width="90%">
+    <p align="center"><b>Figura 7.</b> Balance del árbol</p>
+</p>
+
+1. **Parsimonia y NJ - Blastn**: Estos métodos son más propensos a generar árboles desbalanceados, lo cual puede reflejar una alta disparidad en las tasas evolutivas entre diferentes linajes o una optimización específica en sus algoritmos.
+2. **UPGMA**: Este método tiende a construir árboles altamente balanceados, reflejando su suposición de evolución uniforme y crecimiento simétrico.
+3. **Diferencias entre NJ y UPGMA**: Neighbor Joining es más sensible a las disparidades evolutivas, lo que se observa en el caso de NJ - Blastn, mientras que UPGMA es más conservador y mantiene el equilibrio entre las ramas.
+
+#### 4. Distancia promedio entre terminales por tipo de métodos y número de bifurcaciones
 
 <div align="center">
-    <img src="resources/ej3_upgma_blastn_tree.png" width="70%">
-    <p><b>Figura 5.</b> Árbol filogenético por distancia (método blastn)</p>
+  <img src="resources/graf_5.png" alt="Graf 1" width="45%">
+  <img src="resources/graf_6.png" alt="Graf 2" width="45%">
 </div>
-
 <div align="center">
-    <img src="resources/ej3_upgma_trans_tree.png" width="70%">
-    <p><b>Figura 6.</b> Árbol filogenético por distancia (método trans)</p>
+  <b>Figura 8.</b> Distancia promedio entre terminales por tipo de métodos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Figura 9.</b> Número de bifurcaciones
 </div>
 
-En cuanto a los métodos de **neighboor joining**, tenemos:
+<br>
 
-<div align="center">
-    <img src="resources/ej3_nj_tree.png" width="70%">
-    <p><b>Figura 7.</b> Árbol filogenético por neighboor joining (método identidad)</p>
-</div>
-
-<div align="center">
-    <img src="resources/ej3_nj_blastn_tree.png" width="70%">
-    <p><b>Figura 8.</b> Árbol filogenético por neighboor joining (método blastn)</p>
-</div>
-
-<div align="center">
-    <img src="resources/ej3_nj_trans_tree.png" width="70%">
-    <p><b>Figura 9.</b> Árbol filogenético por distancia (método trans)</p>
-</div>
-
+Por un lado, de la Figura 8, se puede extraer la conclusión de que los métodos basados en Blastn destacan por su sensibilidad a pequeñas diferencias evolutivas, mientras que Parsimonia, Identity y Trans priorizan la simplicidad y generan árboles más compactos y conservadores, adecuados para secuencias similares.
+Por otro lado, la Figura 9 muestra que los métodos de Parsimonia y UPGMA destacan por su alta resolución y capacidad para identificar múltiples bifurcaciones evolutivas, ideales para análisis detallados, mientras que NJ genera árboles más simples, adecuados para visiones generales.
 
 ---
 
 ## **Conclusiones Generales**
 
-1. El análisis del árbol filogenético inicial permitió identificar patrones de divergencia y similitud evolutiva, destacando linajes claramente diferenciados y agrupamientos estrechos.
-2. Las modificaciones realizadas en el árbol resaltaron visualmente las relaciones clave, facilitando su interpretación y análisis.
-3. Los árboles generados a partir de secuencias aleatorias permitieron explorar los resultados de diferentes métodos de construcción (parsimonia y distancia). Los métodos mostraron fortalezas en diferentes aspectos del análisis evolutivo, destacando la importancia de elegir el enfoque adecuado según el contexto del estudio.
+1. **Comparación de Métodos**:  
+   - **Parsimonia**: Produce árboles más conservadores con longitudes moderadas y un balance entre profundidad y número de bifurcaciones. Es ideal para datos simples y bien caracterizados.
+   - **UPGMA**: Genera árboles balanceados y con menor profundidad, reflejando su asunción de una evolución uniforme. Es adecuado para análisis rápidos y conservadores.
+   - **Neighbor Joining (NJ)**: Más sensible a variaciones evolutivas y divergencias, con árboles generalmente más largos y profundos. Es útil para representar datos con tasas evolutivas heterogéneas.
+
+2. **Influencia de las Distancias**:  
+   - Las distancias utilizadas (Blastn, Identity, Trans) afectan significativamente la interpretación de las relaciones evolutivas. Las distancias como Blastn tienden a generar árboles más largos y profundos, mientras que Identity y Trans producen estructuras más compactas y conservadoras.
+
+3. **Efectos en los Parámetros de los Árboles**:  
+   - Los parámetros como la profundidad máxima, el número de nodos internos/terminales, y las bifurcaciones varían dependiendo del método y las distancias empleadas. Esto destaca la importancia de seleccionar cuidadosamente el enfoque metodológico según los objetivos del análisis.
+
+4. **Recomendaciones Generales**:  
+   - **Para análisis detallados**: Métodos como Parsimonia y UPGMA con distancias más sensibles (Blastn) son útiles para capturar diferencias evolutivas finas.
+   - **Para una visión general**: Métodos como NJ con distancias menos sensibles (Identity o Trans) pueden proporcionar árboles más simples y directos.
+
+En resumen, los resultados demuestran que la aleatoriedad en los datos iniciales, junto con la elección del método y la distancia, influye profundamente en las conclusiones filogenéticas. Una aproximación combinada, utilizando múltiples métodos y distancias, ofrece una perspectiva más robusta y confiable de las relaciones evolutivas.
 
 ---
 
